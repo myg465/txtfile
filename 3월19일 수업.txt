@@ -1,0 +1,26 @@
+팀내 자료공유
+
+upload@lang.kr
+
+koitt4team
+
+ 진행상황 휴대폰 번호
+
+nth-of-type=> 지정한 타입에 순번 부여
+
+::after=> 뒤에 특정 내용(content) 을 붙일수 있다.(선택자 처럼 쓸수있다. )
+
+
+LMS
+ 관리자 로그인 페이지
+ 메인메뉴 상단(?)
+
+내일 자바 카드 할것임
+
+jsp 선행학습
+
+
+순서= js - jquary - jsp - oracle db - spring -  node.js
+
+
+ 
