@@ -1,0 +1,89 @@
+내부적인 통신을 할때 포트 1521
+외부에서 접근할때는 8080
+
+별칭 주기 as 별칭 
+(as 생략가능 , ""로 묶어도됨 (대소문자 구별하고 싶은경우) )
+
+distenct ->중복된것은 하나만
+
+-----------------order by----------------------
+
+정렬
+
+asc- 오름차순
+desc- 내림차순
+
+두개의 형태로 정렬할때=>
+먼저것을 먼저 정렬하되 똑같은것이 있으면 
+뒤의 것을 기준으로 정렬
+
+count-> 해당되는 수를 카운트
+
+---------------연산자 우선순위----------------
+
+자바랑 똑같음
+
+----------------함수-------------------
+
+sql문서 참조
+
+---------------jdbc연결-----------------
+ex0410_01.jsp
+
+
+오라클 디비와 이클립스를 연결해주는 드라이버임
+
+드라이버로드->db연결->sql문 실행 ->연결해제(close)(순서는 역순으로)
+
+드라이버,연결,실행 부분 모두 객체로 생성하여 사용
+
+실행이 다 되면 resultset이 리턴값으로 넘어옴
+
+임포트 이름 - java.sql.
+
+연결구성도
+톰캣-jdbc-oracle
+
+
+순서
+
+connection,statement,resultset를 선언한다.
+
+사용할때 
+Class.forname("oracle.jdbc.driver.OracleDriver")->드라이버 연결
+
+DriverManager.getConnection(url,db id, db pw)->커넥션 생성(선언된 connection에 지정)
+
+connection.createStatement()->실행객체를 생성(선언된 statement에 지정)
+
+statement.executeQuery(sql구문)->sql 을 실행함(선언된 resultset에 지정)
+
+사용방법
+
+저장된 statement를 사용하여 데이터 출력(get ...)
+
+사용시 try-catch-finally(사용해제) 에 넣어서 사용
+
+
+사용해제시(finally부분에서 선언)
+
+try-catch문을 사용하여 해제
+
+-- 지금 진행상황
+
+악기 테이블
+
+
+
+
+
+result,statement,connection순으로 해제함
+
+null값이 아니면 해제(close()로)
+
+예외처리는 printStackTrace로 콘솔에 표시
+
+
+
+
+

@@ -1,0 +1,413 @@
+--모든 테이블을 보는 명령--
+
+select * from tab;
+
+--테이블 지우기--
+
+drop table member2;
+
+select * from tab;
+
+drop table member;
+
+select * from tab;
+
+create table member(
+id varchar2(20) primary key,
+pw varchar2(20),
+name varchar2(20),
+phone varchar2(20));
+
+select * from tab;
+
+--member테이블의 정보 조회--
+
+desc member;
+
+--테이블 만들기--
+
+create table member2(
+id varchar2(20) primary key,
+pw varchar2(20),
+name varchar2(20),
+hobby1 number(1),
+hobby2 number(1),
+hobby3 number(1),
+hobby4 number(1),
+gender varchar(3),
+address varchar(50));
+
+select * from tab;
+
+select * from employees;
+
+select 
+employee_id as 사번,
+emp_name as "Name",
+salary+(salary*nvl(commission_pct,0))as 월급,
+salary*12 연봉 
+from employees ;
+
+select emp_name,
+(salary+commission_pct) from employees;
+
+create table koitt_member(
+id varchar2(20) primary key,
+name varchar2(20),
+pay number(7),
+t_day number(2));
+
+--값 넣기--
+
+insert into koitt_member(id,name,pay,t_day)values
+('ko1','허성무','30000','20');
+
+insert into koitt_member values
+('ko2','조준희','30000','20');
+
+insert into koitt_member values
+('ko3','홍길동','30000','');
+
+insert into koitt_member values
+('ko4','유관순','30000','');
+
+commit;
+
+select *
+from koitt_member;
+
+select name,
+pay * nvl (t_day,0) as "이번달 수당"
+from koitt_member;
+
+select *
+from employees;
+
+--영문 컬럼을 한글 별칭으로 바꾸기--
+
+select
+employee_id as 사번,
+emp_name as 이름,
+email as 이메일,
+phone_number as 휴대전화,
+hire_date as 입사일,
+salary as 월급,
+manager_id as 관리번호,
+commission_pct as 수당률,
+retire_date as 퇴사일,
+department_id as 부서번호,
+job_id as 직책,
+create_date as 생성일,
+update_date as 수정일
+from employees;
+
+select 
+distinct emp_name,department_id
+from employees order by department_id asc;
+
+select employee_id 
+from employees
+order by employee_id asc;
+
+select 
+employee_id
+from employees 
+order by employee_id desc;
+
+select *
+from employees 
+order by manager_id desc,
+salary asc;
+
+select 
+distinct job_id
+from 
+employees;
+
+select
+*
+from
+jobs;
+
+select
+*
+from
+employees;
+
+select
+distinct manager_id
+from
+employees;
+
+select
+*
+from
+employees
+where salary>=5000
+order by salary asc;
+
+--월급과 커미션을 더해서 8000을 넘는 사람을 구하기--
+
+select
+*
+from 
+employees
+where 
+(salary+(salary*nvl(commission_pct,0)))>=8000
+order by
+salary asc;
+
+select 
+salary
+from
+employees;
+
+--월급이 만달러가 안되는 사람들의 수를 세기(count)--
+
+select 
+count(salary)
+from
+employees
+where
+salary!=10000;
+
+--사번이 200번인 사람 출력--
+
+select
+*
+from
+employees
+where
+employee_id=200;
+
+--사번이 150이상인 사람--
+
+select
+*
+from
+employees
+where
+employee_id>=150;
+
+--급여가 400이하인 사번,이름,급여 출력(사번을 오름차순으로)--
+
+select
+employee_id,
+emp_name,
+salary
+from
+employees
+where
+salary<=4000
+order by
+employee_id
+asc;
+
+--이름 찾기--
+
+select
+*
+from
+employees
+where
+emp_name='Pat Fay';
+
+--P로시작되는 이름 찾기--
+
+select
+*
+from
+employees
+where
+emp_name like 'P%';
+
+--p가 들어있는 이름은 모두찾기--
+
+select
+*
+from
+employees
+where
+emp_name like '%P%';
+
+--'동'이 들어있는 이름 찾기-- 
+
+select
+*
+from
+koitt_member
+where
+name like '%동%';
+
+--두번째 자리에 o가 들어있는 이름을 찾기--
+
+select
+*
+from
+employees
+where
+emp_name like '_o%';
+
+--입사일자가 2007년 이하인 사람을 조회--
+
+select
+*
+from
+employees
+where
+hire_date<'07/01/01'
+order by
+hire_date asc;
+
+--두가지 조건을 한꺼번에 쓰기--
+
+select
+count(*)
+from
+employees
+where
+salary>5000
+and
+department_id='50';
+
+--월급이 4000이상 이면서 부서번호가 30인 사람
+
+select
+*
+from
+employees
+where
+salary>=4000
+and
+department_id='30';
+
+--월급이 3000,4000,5000,6000,10000인사람--
+
+select
+*
+from
+employees
+where
+salary='3000'
+or
+salary='4000'
+or
+salary='5000'
+or
+salary='6000'
+or
+salary='10000'
+order by
+employee_id asc;
+
+--사번이 104 이거나 150 이상인 사람--
+
+select
+*
+from
+employees
+where
+employee_id='104'
+or
+employee_id>='150'
+order by
+employee_id asc;
+
+--사번이 150에서160 사이인 사람--
+
+select
+*
+from
+employees
+where
+employee_id 
+BETWEEN --사이에 있는 값을 찾는 명령--
+150 and 160;
+
+--or로 범위를 정하면 겹치는 부분(and)을 제외한 나머지
+
+select
+*
+from
+employees
+where
+salary<5000
+or
+salary>10000;
+
+--not을 붙이면 반대의 결과--
+ 
+select
+*
+from
+employees
+where
+salary
+not between
+5000
+and
+10000;
+
+--날짜 범위 검색--
+
+select
+*
+from
+employees
+where
+hire_date
+between
+'00/01/01'
+and
+'05/12/31'
+order by
+hire_date asc;
+
+--이름 정렬--
+
+select
+*
+from
+employees
+order by
+emp_name asc;
+
+--or의 조건이 많을때는 in을 쓰면 된다.--
+
+select
+*
+from
+employees
+where
+salary 
+in
+(3000,4000,5000)
+and
+employee_id>=190;
+
+--부서번호가 30,40,50,이면서 월급이 5000이상인 사람--
+
+select
+*
+from
+employees
+where
+department_id 
+in
+(30,40,50)
+and
+salary>=5000;
+
+--null 인 값을 검색할때--
+
+select
+*
+from
+employees
+where
+commission_pct is null;
+
+
+
+
+
