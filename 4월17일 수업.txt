@@ -1,0 +1,125 @@
+
+현재상황
+로그인 해결됨
+
+modify 데이터 입력
+
+
+
+-------------------무결성 제약조건--------------
+
+-부적절한 입력을 방지하는 것
+
+not null, unique, primary  key(유일,널값허용안됨), foreign key, check
+
+자바스크립트 무결성에 걸리기 전에 미리체크
+
+둘이상의 제약을 걸수 있음
+
+널값은 중복이 허용됨
+
+primary key는 테이블당 하나만 있는게 좋음
+
+주민번호를 받으려면 절차가 까다로움-> 핸드폰 번호를 기본키로
+
+-foreign key
+
+다른 테이블의 기본키로 되있는것을 참조한다.
+(그 키의 범위에 맞지 않으면 에러)
+
+부모테이블- 기본키 / 자식테이블-외래키
+
+-check
+
+설정된값 이외의 값은 들어오지 못하게 한다.
+(유효성)
+
+-default
+
+기본값(아무것도 안들어왔을때) 설정
+
+null이 안들어가게 할수있다.
+
+---------------------시퀀스-----------------------
+
+번호가 자동으로 들어갈수 있게 하는것
+
+구성
+
+create sequence 시퀀스 이름
+
+	시작값
+	증가치지정(얼마씩 증가할지)
+	최대값지정(~10^27)
+	최소값지정
+	최대값 지정경우 넘어가면 처음으로 돌아갈건지
+	캐시(설정안함)
+
+	ex)
+
+	create sequence b_seq
+		increment by 1
+		start with 1
+		minvalue 1
+		maxvalue 10000
+		nocycle ;
+
+-- 에러가 나도 시퀀스가 읽히기 때문에 증가됨(주의)
+
+currval -> 현재의 번호를 확인
+
+사용방법 시퀀스명.nextval
+
+시퀀스는 예민하지 않은 게시판의 아이디같은 곳에 사용
+(학번 같은 경우는 자바에서 생성자를 통해 생성)
+
+--------------------커넥션풀------------------
+
+dao(db에접속할때)-model이 됨,
+dto(db에서 온 정보를 가공할때)-model이 됨 를 사용함
+
+서블릿으로 컨트롤러를 만들고
+
+jsp페이지에서 받아 출력
+
+어레이 리스트에서 값을 받아서 출력
+
+db접속하는 시간이 오래 걸리기 때문에 미리 만들어놈
+
+여러명이 동시접속시 사용
+
+server의 context.xml
+
+ <Resource
+    	auth="Container"
+    	driverClassName="oracle.jdbc.driver.OracleDriver"
+    	url="jdbc:oracle:thin:localhost:1521:orcl"
+    	username="ora_user"
+    	password="1234"
+    	name="jdbc/Oracle11g"
+    	type="javax.sql.DataSource"
+    	maxAction="50"
+    	maxWait="1000"
+    />
+
+dao파일
+
+DataSource dataSource;
+Context context = new InitialContext();
+dataSource = (DataSource)context.lookup("java:comp/env/jdbc/Oracle11g");
+
+
+
+member3테이블
+
+j_num(시퀀스)id(기본키),pw(널아님),name(널아님),email
+,address,phone,birth,gender(남자,여자),news(기본: 예),sms(기본: 예),j_date(자동)
+
+
+
+
+
+
+
+
+
