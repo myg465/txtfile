@@ -1,0 +1,30 @@
+
+주소검색 api활용
+
+insert 만들기
+
+신규회원 new붙이기 : 현재 날짜와 비교해서 오늘이면 new추가
+
+httpsession= request.getsession()
+-> 서블릿에서 세션 얻기
+
+con.setAutoCommit(false); ->자동커밋 방지(기본은 자동으로 커밋수행됨)
+
+con.commit(); 이 실행되야 db에 저장됨
+
+제대로 실행 안될경우 con.rollback();
+
+중요한 작업을 수행할 경우
+
+-회원가입날짜와 업데이트 날짜를 구분해야함
+
+뷰를 만들어야함
+
+id,pw,name,email,
+address1->우편번호
+address2->주소1
+address3 -> 나머지 주소
+
+b_date 가입일, 
+u_date 수정일,
+ 
