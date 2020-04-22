@@ -1,0 +1,23 @@
+
+--------------파일 업로드 게시판제작--------------
+
+http://servlets.com접속 ->com.oreilly.servlet ->cos-20.08.zip다운
+-> 프로젝트내 라이브러리에 넣기
+
+form속성 에 enctype="multipart/form-data"추가
+
+* 입출력에 관련된 작업을 할때는 예외처리 필수
+
+파일은 multipartRequest로 받음 -request 메소드와 유사
+
+
+1.오라클 테이블 제작
+2. bdto 제작
+3. bdao 제작
+(insertBoard,getBoards 메소드)
+4. upload_formok.jsp 수정
+
+*테이블 number지정할때 37자리 이상으로 지정안됨
+
+수정시 파일은 기존파일은 따로 출력해주고 새파일을 따로 받는다.
+만약 새파일의 값이 null이면, 기존파일을 기존파일을 재업로드 한다.
