@@ -1,0 +1,90 @@
+타임스탬프 : 직접 값을 출력할경우 잘 작동,
+스트링으로 바꿀경우 충돌
+셀렉트값 불러오기 -> 값을 넣은 옵션을 추가함
+
+
+
+중요!!
+
+ArrayList list = new ArrayList();
+MemberDao mdao = MemberDao.getInstance();
+list = mdao.getMembers();
+request.setAttribute("test", list);
+
+--arraylist를 jstl로 받는 방법--(ex_01)
+foreach 로 받을수 있다.(단, request저장소에 저장되있어야함)
+
+형태: 변수명, 리스트명
+
+사용: ${변수명.속성얻는 메소드}
+
+예외처리 페이지는 각 페이지마다 등록해줘야함(특히 입출력에 관련된 페이지)
+(4월8일 수업)
+
+--request에 객체를 등록하고 forward로 페이지를 넘기면 받는페이지에서
+request에 있는 객체를 사용할수 있다.
+(response.sendredirect로 보내면 못받음)
+
+------------------------------------------------
+
+jstl에 들어가는 모든값은 ""사이에 들어가야 한다.
+
+--MVC역할--
+
+뷰단인 jsp에서는 컨트롤러에서 전달받은 request를 사용한다.
+컨트롤러에 form이나 parameter로 값을 전달한다.(스크립트릿을 쓸 필요가 없다.)
+
+컨트롤러는 값을 받아서 dao(모델)의 메소드를 호출한다.
+
+모델인 dao는 db에 요청을 하고 결과집합을 돌려준다.(컨트롤러에)
+
+--------------------------------------------------------
+
+컨트롤러(서블릿)에서 dao메소드호출-> dispatcher에 담아서 뷰로 response
+
+->받아서 EL태그를 이용해 출력
+
+
+----function태그----
+
+자바에서 쓰는 메소드를 쓸수 있다.(사용은 EL에서 fn:으로 사용)
+
+--forward--
+
+RequestDispatcher사용(서블릿에서 사용되는 형태/ jsp에서도 사용가능)
+RequestDispatcher dispatcher = request.getRequestDispatcher("/받을 주소");
+dispatcher.forward(request, response);
+
+request를 담아서 보낼수 있다
+
+
+--값을 넘기고 받는 형태--
+
+	1.form
+
+	2.parameter
+
+	3.param
+
+	4.기본객체
+
+	5.page,request,session
+
+	6.application
+
+----------------프론트 컨트롤러와 커맨드------------
+
+ok페이지를 서블릿으로 분리한다(컨트롤러)
+
+맵핑형태
+
+1. 디렉터리 패턴 - > 유알엘 매핑
+
+2. 확장자 패턴 -> 일단 모든요청을 한곳에서 받고 그곳에서 분기
+
+구성
+
+요청->컨트롤러(패스를 분석해서 분기함)->커맨드(각각의 요청처리 클래스)->dao
+
+
+
