@@ -1,0 +1,198 @@
+쿡킷 홈페이지 구현하기
+일반회원과 관리자 구분 별도의 칼럼으로 구별
+
+구현할 내용
+큰틀
+회원
+판매자 페이지
+관리자페이지
+
+현재상황 아이디 체크에서 아이디 입력으로 파라미터 전송
+
+post로 보내고 받아서 처리후check 파라미터로 리턴 리턴받은 값이
+참일때만 전송버튼 나타나게
+
+-----------------외래키---------------
+
+부모키에서 기본키인것을 자식키에서 사용
+부모키에 없는 값을 넣으면 에러
+
+---------------체크제약조건-------------
+
+범위나 사용할값을 정해줄수 있다.
+
+---------------논리문-----------------
+
+<--decode함수-->(switch랑 비슷하다)
+
+쓸수 있는값 : 숫자, 문자,문자열
+
+-구성-
+
+decode(칼럼, 케이스1, 수행할내용1
+	     케이스2, 수행할 내용2...)
+
+EX)
+
+//연봉인상을 해주는 사람을 찾아서 salary를 인상해 주세요.
+//pu_man-5%,st_clerk-10%,fi_mgr-3%
+
+select
+emp_name,job_id,salary,
+DECODE(job_id, 'PU_MAN', salary*0.05,
+                'ST_CLERK', salary*0.1,
+                'FI_MGR',salary*0.03)as 인상률,
+DECODE(job_id, 'PU_MAN', salary*1.05,
+                'ST_CLERK', salary*1.1,
+                'FI_MGR',salary*1.03)as 연봉인상
+
+from employees
+
+where job_id in('PU_MAN','ST_CLERK','FI_MGR');
+
+-단점: 범위지정 불가
+
+------------------------------------------------
+
+<--case함수--> (if랑 비슷하다)
+
+범위지정 가능
+
+-구성- 
+
+case when 조건 then 표현할값
+
+end 
+
+EX1)
+
+select
+emp_name,job_id,salary,
+case when job_id='PU_MAN' then salary*0.05
+    when job_id='ST_CLERK' then salary*0.1
+    when job_id='FI_MGR' then salary*0.03
+    end as 인상률 
+from employees
+where job_id in('PU_MAN','ST_CLERK','FI_MGR');
+
+EX2)
+
+select
+stu_num,stu_name,stu_total,stu_avg,
+case when stu_avg>=90 then 'A학점'
+    when stu_avg>=80 and stu_avg<90 then 'B학점'
+    when stu_avg>=70 and stu_avg<80 then 'C학점'
+    when stu_avg<70 then 'D학점'
+end as stu_hak from stu_score;
+
+--인서트할때 넣을수 있음
+
+--------------------------------------------
+
+<--그룹함수-->
+
+count(몇명이 있는지) count(*)->총몇개인지(행의 갯수)
+avg(칼럼)-> 칼럼의 값을 평균으로
+max(최대),min(최소),sum(합계)
+
+count에서는 null이 들어 있으면 세지 않음(null은 있지만 값은 있음)
+count를 사용할때는 nvl을 사용해야함(null을 대체)
+
+--group by(기준 칼럼)--
+
+그룹함수와 일반칼럼을 같이 쓸수 있게 해준다.
+
+각그룹의 함수값을 출력(통계)
+
+where를 쓰고 싶으면 having조건으로 써야함
+-> having에도 그룹함수 쓸수 있다.
+
+-----------------------EL태그-------------------
+
+* 유즈빈에 값 다넣기 -> 프로퍼티 설정에서 * 로 설정
+
+가독성이 좋게 만듬(뷰페이지에서)
+
+-> 표현식,액션태그를 대체
+
+--내장객체--
+세션,쿠키,어플리케이션등 기본객체를 다 사용가능하다.
+
+객체이름.속성명으로 바로 받을수 있다.
+(단, 위에 usebean을 사용해야 함)
+
+param으로 바로 폼값을 받을수도 있음(usebean쓸 필요 없이)
+
+request를 이용한 객체보내기
+
+-> 메모리 절약
+
+----------------------jstl태그--------------------
+
+별도 설치(http://jakarta.apache.org/ 접속 ->
+
+taglibs메뉴->Apache Standard Taglib클릭
+
+JSTL 1.1(링크클릭)
+
+binaries/(링크클릭)
+
+jakarta-taglibs-standard-1.1.2.zip(다운)
+
+C:\Program Files\Apache Software Foundation\Tomcat 9.0\lib(톰캣경로) 에
+
+jstl,standard.jar추가 
+( 다운받은 jakarta-taglibs-standard-1.1.2\jakarta-taglibs-standard-1.1.2\lib 에 있음)
+
+-----------------------------------------------------
+
+--사용방법--<자바스크립트 자료형을 사용함>
+
+라이브러리를 선언해야한다(core를 주로 사용)
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+-> prefix는 아무걸로나 해도됨(통상 c로 사용)
+
+core의 기능- 일반 자바언어와 비슷한 기능제공
+(<c:tag>)
+
+변수설정
+<c:set var="변수명" value="설정값">
+변수제거
+<c:remove var="변수명">
+
+*jstl태그와 스크립트릿은 호환이 안됨(변수) - 별도로 선언하면 가능
+*jstl-EL태그는 호환
+
+
+-------if문-----
+
+else if는 없음(if문을 계속 이어서 쓸수있다.)
+모든자료형 비교가능(var)
+
+----choose-----
+
+switch랑 같다
+
+------foreach-----
+
+반복문
+
+-----redirect------
+
+다른 페이지로 넘겨준다.
+
+-----param-------
+
+파라미터 값을 넘겨준다.
+
+-----날짜/시간----
+
+fmt
+
+
+
+
+
+
+
+
