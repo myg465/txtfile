@@ -1,0 +1,228 @@
+컨트롤러-모델통합 ? (선택) 
+인터페이스->(어노테이션)
+모델저장소=리퀘스트 저장소
+파라미터로 값넘겨줄때 주소뒤에 붙임(/변수)
+폼.xml
+어플설정부분
+
+숙제 -> 게시판 만들기 (어제했던거+페이지 넘버링 추가)
+
+
+
+계산식이 들어간 쿼리를 작성할경우 별칭을 지정해줘야함
+(resultset으로 받을때 별칭으로 받는다)
+(그냥받을경우 계산식을 포함해서 불러와야됨)
+
+
+각테이블 사이에는 연관점이 있어야 한다.
+
+* rownum->순번을 표시(단독사용)
+(컬럼을 추가하는 것이기 때문에 원테이블의 별칭을 지정해서 컬럼을 지정해야함)
+
+*row_number()->
+
+
+서브쿼리
+
+select rownum(순번),employee_id,emp_name
+from(select*from employees where salary>=7000);
+-> 검색된 결과를 대상으로 검색
+
+
+--조인--
+
+두개이상의 테이블에서 원하는 정보를 찾아서 검색
+(특정한것의 정보가 다른테이블에 있을때)
+
+
+구성(eq조인-> 같은것 중에서(두칼럼에 일치되는 것만))
+
+select emp.emp_name,j.job_id,j.job_title(어느쪽의 칼럼인지 지정해야함)
+from
+employees emp,jobs j(별칭으로 써도됨)
+where emp.job_id=j.job_id;(연관된 칼럼이 있어야 함)
+
+
+--non_eq조인--
+
+사이에 있는 값들을 찾을때(범위지정)
+
+select
+e.emp_name,d.department_name,e.job_id
+from
+employees e,departments d
+where
+e.department_id between 50 and 120 and e.department_id=d.department_id;
+
+
+--셀프조인--
+
+자기자신을 조인
+별칭을 다르게 줘서 찾는다.(가상으로 두개의 테이블로 만듬)
+
+select e1.employee_id,e1.emp_name,e1.manager_id,e2.emp_name
+from 
+employees e1,employees e2
+where
+e1.manager_id=e2.employee_id;
+
+----------------------------------------
+
+게시판 하단 번호넣기
+
+request.getattribute->object를 반환함
+그냥 형변환은 불가(tostring으로 문자열로 반환후 int로)
+integer.valueof(request.getattribute()).intvalue();
+
+필요변수(한페이지 최대게시글10기준)- 1부터 10까지 한페이지에 나타나야됨
+
+- 총게시글수(전체 수)
+
+-현재 하단페이지(현재 클릭해서 들어온 페이지)
+
+-최대페이지(총 몇페이지인지- 한페이지당 보여줄 게시글 수를 나눠서)
+   -계산법 : int((double)전체게시글/최대페이지+0.9)  * int로 형변환시 소수점 뒤는 버리게됨
+
+-처음페이지 (페이지가 입력해서 넘어올때 번호목록의 처음)
+	1,11,21,31,41....
+   -계산법 : (((int)((double)들어온 페이지/10+0.9))-1)*10+1
+
+-마지막페이지
+   -계산법 : if(마지막페이지>처음페이지+10-1)
+		마지막페이지=처음페이지+10-1
+	(올림해서 계산하면 되지만 한자리수일때 문제됨)
+
+처음번호: (페이지번호-1)*10+1
+마지막번호: 처음번호+최대게시글수-1
+
+
+
+--sql--
+
+select department_id,to_char(avg(salary),'99999.99') as avg1
+from
+employees
+group by
+department_id;
+
+desc employees;
+
+
+select * from
+jobs;
+
+select emp_name,jobs.job_id,jobs.job_title
+from
+employees,jobs
+where employees.job_id='FI_MGR' and employees.job_id=jobs.job_id;
+
+select emp.emp_name,j.job_id,j.job_title
+from
+employees emp,jobs j
+where emp.job_id=j.job_id;
+
+--employees-> employee_id,emp_name,department_id
+--departments->department_name
+
+select
+e.employee_id,e.emp_name,e.department_id,d.department_id
+from
+employees e,departments d
+where e.department_id=d.department_id;
+
+select rownum,employee_id,emp_name
+from(select*from employees where salary>=7000);
+
+--Ne로 시작되는 사람의 사원번호,이름,부서번호,부서이름 출력
+
+select e.employee_id,e.emp_name,d.department_id,d.department_name
+from employees e, departments d
+where e.emp_name like 'Ne%' and e.department_id=d.department_id;
+
+
+select
+*
+from
+departments;
+
+select
+*
+from
+kor_loan_status;
+
+--부서번호가 20번인 사원번호,사원이름,부서이름,부서번호,부서이름,입사일
+
+
+select
+e.employee_id,e.emp_name,d.department_name,d.department_id,e.hire_date
+from
+employees e,departments d
+where
+d.department_id=20 and e.department_id=d.department_id;
+
+
+
+select* from employees;
+
+
+
+--직급이 sa_man인사람의 이름,부서이름 
+select
+e.emp_name,d.department_name,e.job_id
+from
+employees e,departments d
+where
+e.department_id between 50 and 120 and e.department_id=d.department_id;
+
+select* from mvc_board;
+
+select*from mvc_board
+where btitle like '%답변%' or bcontent like '%답변%';
+
+select*from mvc_board where btitle like'%답변%';
+select rownum,m.* from mvc_board m where bcontent like'%답변%';
+
+select
+*
+from
+mvc_board where
+btitle like '%테스트%'or bcontent like '%테스트%';
+
+SELECT
+    *
+FROM employees;
+
+select emp_name
+from
+employees
+where employee_id=124;
+
+select emp_name,manager_id
+from
+employees where employee_id=198;
+
+select e1.employee_id,e1.emp_name,e1.manager_id,e2.emp_name as manager_name
+from employees e1,employees e2
+where e1.manager_id=e2.employee_id;
+
+select * from 
+(select rownum rnum,bId,bName,bTitle,bContent,bDate,bHit,bGroup
+,bStep,bIndent from
+(select * from mvc_board order by bGroup desc,bid asc))
+where rnum>=1 and rnum<=10;
+
+--13/10+0.95=> 2페이지
+
+select *from mvc_board;
+
+select count(*) as count from mvc_board;
+
+select bTitle from mvc_board where bId in(22,24);
+
+select rownum,m.* from mvc_board m;
+
+
+
+
+
+
