@@ -1,0 +1,215 @@
+오픈소스 쇼핑몰 로직 참고
+
+
+plist -> pcontentview 넘어가는거 체크
+
+
+-----금요일 복습---01
+
+--------------xml에서 프로퍼티 호출하기--------02
+
+제일 간단함
+
+<context:property-placeholder location="classpath:admin.properties,
+classpath:sub_admin.properties"/>  ->두개를 받을수도 있음
+
+값을 받는 방법-> value에 el태그로 넣어줌 (키이름으로)
+
+ex)
+<property name="auth" value="${auth}" />
+
+또는
+
+<property name="adminId">
+    <value>${admin.id}</value>
+</property>
+
+
+
+* 파일명 에러는 찾기 쉽지 않음 -> 파일 생성시 신중하게 
+
+-------------------실습----------------------03
+
+server정보를 프로퍼티 2개에 넣어서 불러오기
+
+-----------------자바에서 부르기--------------04
+
+<appCTX.java>
+
+package com.javalec.ex;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+@Configuration
+public class AppCTX {
+	
+	@Value("${auth}") // 프로퍼티에서 값을 주입해줌
+	private String auth;
+	@Value("${driverClassName}")
+	private String driverClassName;
+	@Value("${url}")
+	private String url;
+	@Value("${username1}")
+	private String username1;
+	@Value("${password}")
+	private String password;
+	@Value("${name}")
+	private String name;
+	@Value("${type}")
+	private String type;
+	@Value("${maxAction}")
+	private String maxAction;
+	@Value("${maxWait}")
+	private String maxWait;
+
+	@Bean  //실행되기 전에 실행됨->static메소드
+	public static PropertySourcesPlaceholderConfigurer properties() {
+		
+		PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+		
+		Resource[] location = new Resource[2];
+		location[0] = new ClassPathResource("server1.properties");
+		location[1] = new ClassPathResource("server2.properties");
+		//(참고)하나만 있을경우
+		//Resource location = new ClassPathResource("server.properties");
+		
+		configurer.setLocations(location); //배열인 경우
+		
+		return configurer;
+		
+	}
+	
+	@Bean
+	public ServerInfo serverInfo() {
+		
+		ServerInfo serverInfo = new ServerInfo();
+		serverInfo.setAuth(auth);
+		serverInfo.setAuth(driverClassName);
+		serverInfo.setAuth(url);
+		serverInfo.setAuth(username1);
+		serverInfo.setAuth(password);
+		serverInfo.setAuth(name);
+		serverInfo.setAuth(type);
+		serverInfo.setAuth(maxAction);
+		serverInfo.setAuth(maxWait);
+		
+		
+		return serverInfo;
+		
+	}
+	
+}
+
+->나머지는 자바에서 값을 받는 것과 같이 
+
+---------------------------실습------------------------05,06
+
+xml과 java 어노테이션 방법으로
+
+LINE=1호선
+STATN_NM=청량리
+ADRES=서울 동대문구 왕산로 328-1
+RDNMADR=서울특별시 동대문구 왕산로 지하
+TELNO=6110-1241
+
+-------------------프로파일 속성을 이용한 설정-------------07
+
+여러 설정중 하나를 선택해서 설정
+
+예시 : 서버1과 서버2가 있을때(테스트서버,실서버)
+
+xml 상단의 beans설정에서 profile 이름 정해주기
+
+-------------------실습-------------------------------08
+
+1)window환경으로 설정
+브라우저: 크롬브라우저
+접속 ip : 211.108.107.1
+사이트 접속
+
+2)tablet환경으로 설정
+브라우저: 삼성브라우저
+접속 ip :211.108.107.2
+태블릿 접속
+3)mobile환경으로 설정
+브라우저 : 안드로이드
+접속 ip : 211.108.107.3
+모바일 접속
+
+
+
+------------------------자바에서 하기------------------------------09
+
+
+-------------------------aop(관점지향)-------------------------10
+
+프로그램 로그를 찍을때
+
+*oop-객체지향프로그래밍
+
+핵심기능과 공통기능을 분리한다.
+
+oop의 다중상속불가,상속의 문제점을 해결
+
+			공통기능
+
+	핵심기능		핵심기능		핵심기능
+
+	(포인트컷)	(포인트컷)	(포인트컷)
+
+클라이언트->프록시(공통기능이 있는곳)->기능(핵심기능이 있는곳)
+
+(포인트컷 : 메소드가 실행되는 조건, 시작과끝점을 설정)
+
+* 메소드에만 적용할수 있다.
+
+dependency설정
+<!-- AOP -->
+  <dependency>
+   <groupId>org.aspectj</groupId>
+   <artifactId>aspectjweaver</artifactId>
+   <version>1.7.4</version>
+  </dependency>
+
+appCTX.xml설정
+
+aop설정
+
+expression-> 어느범위까지 적용할지
+
+----------------------------------------------------11
+
+1. studentInfo
+학번(연결)
+학생이름
+학과
+주소
+전화번호
+출력메소드()
+
+2. stuscore
+학번(연결)
+국어,영어,수학,합계,평균
+출력메소드()
+
+3. bookloan(도서대출)
+학번(연결)
+도서번호:b001
+도서제목
+분류: 에세이,잡지,소설
+대출일자/반납일자/연체일
+출력메소드()
+
+
+
+
+
+ 
+
+
+
