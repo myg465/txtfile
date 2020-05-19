@@ -1,0 +1,144 @@
+ 디비설계
+ ,순서도
+ ,처리 프로세스
+->
+  
+
+
+
+
+------------------------aop계속----------------------01
+
+범위지정방법
+
+pointcut( 범위 )->검색조건을 지정가능(ppt참조)
+
+execution-> 특정부분이 있는 메소드
+
+-> ex) 리턴값이 void중에서 stu로 시작되는 메소드만 실행하고 싶을때
+
+execution(public void stu*(..))
+
+within -> 특정 패키지 안에 있는것
+
+bean -> 특정 빈
+
+------------------------실습---------------------------02
+
+Noticeboard class - around실행
+번호,제목,내용,날짜,작성자,(출력)
+
+Eventboard class - after실행
+번호,제목,내용,이벤트시작일,이벤트종료일,(출력)
+
+Join class - before에만 실행
+회원번호,아이디,패스워드,이름,가입일,(출력)
+
+
+--------------------------자바에서 aop------------------------03
+
+aop클래스에 @aspect(클래스 위에),@pointcut("범위설정"),@around("범위설정")등 설정
+
+
+xml에는 선언만 해주면됨
+
+--xml설정부분--
+
+<aop:aspectj-autoproxy /> <!-- logAop가 오토프록시라는 것을 선언함 -->
+<bean id="logAop" class="com.javalec.ex.LogAop" />
+
+
+
+--------------------------------실습-----------------------------04
+
+book class - around
+책번호,책이름,분류,저자
+
+rental class- before
+회원번호,이름,대여책,반납일,연락처
+
+
+------------------------------스프링MVC----------------------------05
+
+디스패처서블릿(web.xml) -> 컨트롤러(분기) -> 모델앤뷰(담아서)->뷰
+
+맵핑방법->web.xml에 설정,어노테이션
+
+흐름: web.xml ->servlet-context.xml->homecontroller.java ->servlet-context.xml->home.jsp
+
+
+
+한글처리 필터-web.xml에 추가
+
+	<filter>     
+		<filter-name>encodingFilter</filter-name>     
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>     
+		<init-param>        
+			<param-name>encoding</param-name>        
+			<param-value>UTF-8</param-value>     
+		</init-param>     
+		<init-param>        
+			<param-name>forceEncoding</param-name>        
+			<param-value>true</param-value>     
+		</init-param>  
+	</filter>  
+	<filter-mapping>     
+		<filter-name>encodingFilter</filter-name>     
+		<url-pattern>/*</url-pattern>  
+	</filter-mapping>
+
+
+-----------------------------------
+
+com.javalec.ex내의 자바파일에 
+
+@controller라고 붙이면 컨트로러가 되는 거임(그외의 폴더에 넣으면 인식못함 - 기본폴더)
+
+서블릿컨텍스트파일에 <context>추가하면 컨트롤러를 찾을 패키지 추가가능
+
+view의 하위폴더를 만들면 리퀘스트 맵핑의 리턴값에 폴더이름까지 써주면됨
+
+이미지 파일은 webapp바로 밑에 넣기 (폴더만들고)
+
+서블릿 컨텍스트 파일에 리소스 매핑을 추가 (예외시키고 싶은 폴더이름)
+
+
+
+
+-------------------------------실습---------------------------06
+
+-BController
+-list.jsp-이미지
+> images
+-update.jsp-이미지
+-insert.jsp-이미지
+-delete.jsp-이미지
+
+-EController
+-event.jsp-이미지
+>eimages
+-eventView.jsp-이미지
+
+
+
+---컨텍스트 패스가 겹치면 충돌이 생김 -- 
+서버구동시 하나만 선택하여 실행
+전의 프로젝트는 클로즈프로젝트 하고 실행
+
+
+-----------------------------------------------------------07
+
+--다른페이지를 링크시 /를 빼야함 (컨트롤러에 매핑해놓은 주소)
+
+
+-----------------------------------------------------------
+컨트롤러를 따로 만들고 이벤트,조인,로그인,공지사항,링크걸기
+
+--내일 진행 : 컨트롤러 만들기,링크걸기
+
+
+
+
+
