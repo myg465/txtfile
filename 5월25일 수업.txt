@@ -1,0 +1,75 @@
+
+오늘 해야할일
+
+순서도 마무리 ( 프론트단)
+
+
+
+----------------------------spring mvc------------------------01
+
+jsp 와 흡사함
+
+폴더구성은 거의 같다.(커맨드,dto,dao등..)
+
+jdbc연결하기 
+
+pom.xml
+
+<!-- Oracle Driver -->
+
+<dependency>
+
+<groupId>ojdbc</groupId>
+
+<artifactId>ojdbc6</artifactId>
+
+<version>6</version>
+
+<scope>system</scope>
+
+<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6_g.jar</systemPath>
+
+</dependency>
+
+추가
+
+프로젝트내 webapp-> WEB-INF폴더에 lib폴더 만들고 ojdbc6_g.jar파일 추가
+
+
+-----------------------------------------------------------
+
+디비 접속정보를 xml으로 만들어서 주입시키는 방법으로 설정
+
+configuration.xml
+
+외부파일에서/내부파일에서
+
+
+----------------------------jdbc템플릿-------------------------
+
+내부파일로 하기
+
+@Autowired - >자동으로 값을 주입해주는 기능
+
+빈에 값을 담지 않아도 값을 주입해준다.
+
+템플릿을 이용해서 다양한 것을 자동으로 해줄수 있음
+
+dao에 넣는 코드양이 줄어듬
+
+세팅만 해놓으면 계속 쓸수있음
+
+메소드 - 그냥 쿼리(여러개 얻을때), 쿼리포오브젝트(한개얻을때), 쿼리포 인트(갯수를 얻을때)
+
+pstmt의 ? 사용방법
+
+new object[]{쿼리에 넣을 변수들}
+
+---------------------------세팅실습-----------------------02
+
+
+
+----------------------------실습--------------------------03
+list,contentview,uphit
+
+request.setAttribute -> model.addAttribute
