@@ -1,0 +1,38 @@
+
+----------------------어제자 복습-------------------------01
+
+select-> query,queryForObject(new beanPropertyRowMapper)
+
+insert,update,delete-> update(new preparedStatementCreator(){},new preParedStatementSetter(){})
+
+매개변수를 받는방법: request, @requestparam, dto객체
+
+
+1) 에러잡기
+
+2) 다른 팀의 html을 이용하여 게시판 구현하기
+
+
+------------------------------------------------------------
+
+
+프로젝트 회의
+
+디비최종기한 내일
+
+다음주 월요일 발표
+
+일정표 들어옴
+
+
+제품(상세)->주문결제
+이벤트
+커뮤니티
+고객센터
+로그인
+회원가입
+마이페이지
+
+
+
+
