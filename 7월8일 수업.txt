@@ -1,0 +1,14 @@
+굳이 db를 연결하지 않아도 file을 추가해서 보여줄수 있다.
+pm2-> 서버가 죽었을때 다시 살려줌, 변경내용이 있을때 자동 리플레시 시켜줌
+설치 program files 폴더에서 npm install
+->프로젝트 폴더에서
+pm2 start js파일이름 --watch
+
+프로젝트 node_naver
+
+엔터
+자동차
+스포츠
+웹툰
+
+fs.writeFile-> 파일을 쓸수 있다.

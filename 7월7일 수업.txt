@@ -1,0 +1,52 @@
+노드js계속
+
+main3.js
+
+index.html
+네이버 스포츠
+
+해외야구
+해외축구
+농구
+배구
+
+링크잡아서 만들기
+
+
+ex0707_03.js
+
+name 홍길동
+tel 010-1111-1111
+address 서울시 금천구 가산동
+id admin
+pw 1234
+gender 남
+
+
+----  도서관리프로그램(관리자만 사용한다.) ----
+
+-- spring
+
+-- 메뉴구성
+
+--> 관리자 로그인(lms 로그인 페이지 가져오기)
+
+-- 메인
+
+보여줄 정보
+
+- 대출도서 리스트( 테이블 : 고유번호, 이름, 저자, 대출일, 반납예정일)
+- 보유도서 권수(위에 p태그로 표시)
+
+
+보유도서관리(리스트,등록,수정,삭제)
+
+대출관리(리스트,대출등록, 반납등록,연체자 검색)
+
+
+테이블 구성
+
+adminInfo(id,pw,name)
+bookList(book_id,name,category,author,img_filename,reg_date)
+rentalList(rental_id,rental_name, rental_phone, rental_date, return_yet_date,return_date, (foreign key) bookId)
+ 
